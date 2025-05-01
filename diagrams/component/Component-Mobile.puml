@@ -6,11 +6,11 @@ top to bottom direction
 !includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
 
 Container_Boundary(SmartHomeSystem, "SmartHome System") {
-  Container(WebApp, "Web Application", "JavaScript", "Handles user interactions")
+  Container(WebApp, "Mobile Application", "Kotlin, Swift", "Handles user interactions")
   Container(Database, "Database", "PostgreSQL", "Stores user data and schedules")
 }
 
-Container(WebApp, "Web Application", "Java, Spring") {
+Container(WebApp, "Mobile Application", "Kotlin, Swift") {
   Component(AuthController, "AuthController", "Авторизация в системе")
   Component(TemperatureController, "TemperatureController", "Упарвление температурой")
   Component(TemperatureServiceLayer, "Service Temperature", "Бизнес логика температуры")
@@ -21,11 +21,11 @@ Container(WebApp, "Web Application", "Java, Spring") {
   Component(ProfileController, "ProfileController", "Управление профилем клиента")
   Component(ProfileServiceLayer, "Service Profile", "Бизнес логика профиля")
   Component(RepositoryLayer, "Repository Layer", "Data access logic")
-  Component(PushService, "Push service", "Сервис уведомлений")
+  ' Component(PushService, "Push service", "Сервис уведомлений")
 }
 
 Rel(AuthController,RepositoryLayer,"Авторизация")
-Rel(PushService,RepositoryLayer,"Пуши")
+' Rel(PushService,RepositoryLayer,"Пуши")
 
 Rel(ProfileController,ProfileServiceLayer,"Вызов методов сервиса")
 Rel(TemperatureController,TemperatureServiceLayer,"Вызов методов сервиса")
