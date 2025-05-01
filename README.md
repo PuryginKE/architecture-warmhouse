@@ -70,7 +70,7 @@
 **Диаграмма компонентов (Components)**
 
 ```markdown
-[Диаграмма компонентов Веб-интерфейса](https://github.com/PuryginKE/architecture-warmhouse/blob/warmhouse/diagrams/component/Component-Web.puml)
+[Диаграмма компонентов Моб.приложения](https://github.com/PuryginKE/architecture-warmhouse/blob/warmhouse/diagrams/component/Component-Mobile.puml)
 ```
 
 **Диаграмма кода (Code)**
