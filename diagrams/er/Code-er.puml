@@ -1,0 +1,62 @@
+@startuml
+title FitLife Membership Management Code Diagram
+
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+class User {
+  +String name
+  +String email
+  +List<Home> homes
+}
+
+class Home {
+  +String home_id
+  +String name
+  +String email
+  +List<Room> rooms
+  +List<Module> modules
+}
+
+class Device {
+  +String name
+  +String email
+  +DeviceType type_id
+  +String serial_number
+  +TelemetryData telemetry
+  +String status
+}
+
+class DeviceType {
+  +String guid
+  +String name
+  +String version
+}
+
+class Module {
+  +String module_id
+  +Device device
+}
+
+class TelemetryData {
+ +String value
+}
+
+class Room {
+  +String roome_id
+  +String location
+  +String temperature
+  +String lighting
+  +List<Module> modules
+}
+
+User "1" -- "0..*" Home : includes
+Home "1" -- "0..*" Room : includes
+Home "1" -- "0..*" Module : includes
+Room "1" -- "0..*" Module : includes
+Module "1" -- "0..*" Device : includes
+Device "1" -- "1" DeviceType : has
+Device "1" -- "1" TelemetryData : has
+
+@enduml

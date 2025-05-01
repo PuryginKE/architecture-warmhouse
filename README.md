@@ -93,7 +93,9 @@
 
 # Задание 3. Разработка ER-диаграммы
 
-Добавьте сюда ER-диаграмму. Она должна отражать ключевые сущности системы, их атрибуты и тип связей между ними.
+```markdown
+[Диаграмма кода User](https://github.com/PuryginKE/architecture-warmhouse/blob/warmhouse/diagrams/er/Code-er.puml)
+```
 
 # Задание 4. Создание и документирование API
 
