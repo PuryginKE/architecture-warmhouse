@@ -11,9 +11,11 @@ System(sensor, "Sensor", "Датчик температуры")
 System(lighter, "Lighter", "Свет")
 
 Container_Boundary(SmartHomeSystem, "SmartHome System") {
+  Container(WebApp, "Веб-интерфейс", "JavaScript", "Взаимодействие с пользователем")
   Container(MobileApp, "Моб.приложение", "Kotlin, Swift", "Взаимодействие с пользователем")
   Container(AuthApi, "Сервис Авторизации",, "Golang", "Авторизация")
   Container(HomeApi, "Сервис Дома", "Golang", "Данные о доме")
+  Container(BffWebApi, "BFF Service", "Golang", "Обмен данными с фронтом")
   Container(BffMobileApi, "BFF Service", "Golang", "Обмен данными с фронтом")
   Container(userInfoApi, "User Info Service", "Golang", "Получение информации о пользователе")
   Container(tempApi, "Temperature Service", "Golang", "Получение данных по температуре")
@@ -28,27 +30,35 @@ Container_Boundary(SmartHomeSystem, "SmartHome System") {
 
 System_Ext(AuthApi, "Auth API", "API Авторизации")
 System_Ext(HomeApi, "Home API", "API Дома")
+System_Ext(BffWebApi, "BFF Web", "API для работы с веб-интерфейсом")
 System_Ext(BffMobileApi, "BFF Mobile", "API для работы с моб.интерфейсами")
 System_Ext(userInfoApi, "User Info API", "API информация пользователя")
 System_Ext(tempApi, "Temperature API", "API управлением температуры")
 System_Ext(sensorApi, "Sensor API", "API управлением датчика")
 System_Ext(lightingApi, "Lighting API", "API управлением светом")
 
+Rel(user, WebApp, "Использует веб-интерфейс")
 Rel(user, MobileApp, "Использует приложение")
 
+Rel(WebApp, AuthApi, "Авторизация")
 Rel(MobileApp, AuthApi, "Авторизация")
+Rel(BffWebApi, AuthApi, "Проверка токена")
 Rel(BffMobileApi, AuthApi, "Провека токена")
 
+Rel(WebApp, BffWebApi, "Обмен данными с BFF")
 Rel(MobileApp, BffMobileApi, "Обмен данными с BFF")
 
+Rel(BffWebApi, Kafka,"Отправка событий")
 Rel(BffMobileApi, Kafka,"Отправка событий")
 
+Rel(BffWebApi, HomeApi,"Получение информации")
 Rel(BffMobileApi, HomeApi,"Получение информации")
 
 Rel(HomeApi, sensorApi,"Получение информации")
 Rel(HomeApi, lightingApi,"Получение информации")
 Rel(HomeApi, tempApi,"Получение информации")
 
+Rel(BffWebApi, userInfoApi,"Получение информации")
 Rel(BffMobileApi, userInfoApi,"Получение информации")
 
 Rel(Kafka, sensorApi,"Отправка собатий")

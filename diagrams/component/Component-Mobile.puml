@@ -1,0 +1,42 @@
+@startuml
+title SmartHome Web Application Component Diagram
+
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+Container_Boundary(SmartHomeSystem, "SmartHome System") {
+  Container(WebApp, "Web Application", "JavaScript", "Handles user interactions")
+  Container(Database, "Database", "PostgreSQL", "Stores user data and schedules")
+}
+
+Container(WebApp, "Web Application", "Java, Spring") {
+  Component(AuthController, "AuthController", "Авторизация в системе")
+  Component(TemperatureController, "TemperatureController", "Упарвление температурой")
+  Component(TemperatureServiceLayer, "Service Temperature", "Бизнес логика температуры")
+  Component(SensorController, "ScheduleController", "Управление датчиком")
+  Component(SensorServiceLayer, "Service Sensor", "Бизнес логика датчиков")
+  Component(LighterController, "PaymentController", "Управление светом")
+  Component(LighterServiceLayer, "Service Lighter", "Бизнес логика освещения")
+  Component(ProfileController, "ProfileController", "Управление профилем клиента")
+  Component(ProfileServiceLayer, "Service Profile", "Бизнес логика профиля")
+  Component(RepositoryLayer, "Repository Layer", "Data access logic")
+  Component(PushService, "Push service", "Сервис уведомлений")
+}
+
+Rel(AuthController,RepositoryLayer,"Авторизация")
+Rel(PushService,RepositoryLayer,"Пуши")
+
+Rel(ProfileController,ProfileServiceLayer,"Вызов методов сервиса")
+Rel(TemperatureController,TemperatureServiceLayer,"Вызов методов сервиса")
+Rel(SensorController,SensorServiceLayer,"Вызов методов сервиса")
+Rel(LighterController,LighterServiceLayer,"Вызов методов сервиса")
+
+Rel(ProfileServiceLayer,RepositoryLayer,"")
+Rel(TemperatureServiceLayer,RepositoryLayer,"")
+Rel(SensorServiceLayer,RepositoryLayer,"")
+Rel(LighterServiceLayer,RepositoryLayer,"")
+
+
+Rel(RepositoryLayer,Database,"Reads/Writes user data")
+@enduml

@@ -1,0 +1,49 @@
+@startuml
+title FitLife Membership Management Code Diagram
+
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+class Home {
+  +String name
+  +List<Room> rooms
+  +void getState()
+  +void activate()
+  +void cancel()
+  +void getSensor()
+  +void setSensor()
+  +void getTemperature()
+  +void setLighter()
+}
+
+class Room {
+  +String location
+  +String temperature
+  +String lighting
+  +List<Lighter> lighters
+  +List<Sensors> sensors
+  +void getState()
+  +void activate()
+  +void cancel()
+  +void getSensor()
+  +void setSensor()
+  +void getTemperature()
+  +void setLighter()
+}
+
+class Lighters {
+   +String lighterId
+   +String location
+}
+
+class Sensors {
+   +String lighterId
+   +String location
+}
+
+Home "1" -- "0..*" Room : includes
+Room "1" -- "0..*" Lighters : includes
+Room "1" -- "0..*" Sensors : includes
+
+@enduml

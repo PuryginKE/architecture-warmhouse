@@ -64,19 +64,35 @@
 **Диаграмма контейнеров (Containers)**
 
 ```markdown
-[Диаграмма контейнеров](https://github.com/PuryginKE/architecture-warmhouse/blob/warmhouse/diagrams/context/Context.puml)
+[Диаграмма контейнеров](https://github.com/PuryginKE/architecture-warmhouse/blob/warmhouse/diagrams/container/Container.puml)
 ```
 
 **Диаграмма компонентов (Components)**
 
 ```markdown
-[Диаграмма компонентов](https://github.com/PuryginKE/architecture-warmhouse/blob/warmhouse/diagrams/context/Context.puml)
+[Диаграмма компонентов Веб-интерфейса](https://github.com/PuryginKE/architecture-warmhouse/blob/warmhouse/diagrams/component/Component-Web.puml)
+```
+
+```markdown
+[Диаграмма компонентов Моб.приложения](https://github.com/PuryginKE/architecture-warmhouse/blob/warmhouse/diagrams/component/Component-Mobile.puml)
 ```
 
 **Диаграмма кода (Code)**
 
 ```markdown
-[Диаграмма кода](https://github.com/PuryginKE/architecture-warmhouse/blob/warmhouse/diagrams/context/Context.puml)
+[Диаграмма кода Auth](https://github.com/PuryginKE/architecture-warmhouse/blob/warmhouse/diagrams/code/Code-auth.puml)
+```
+
+```markdown
+[Диаграмма кода BFF](https://github.com/PuryginKE/architecture-warmhouse/blob/warmhouse/diagrams/code/Code-bff.puml)
+```
+
+```markdown
+[Диаграмма кода Home](https://github.com/PuryginKE/architecture-warmhouse/blob/warmhouse/diagrams/code/Code-home.puml)
+```
+
+```markdown
+[Диаграмма кода User](https://github.com/PuryginKE/architecture-warmhouse/blob/warmhouse/diagrams/code/Code-user.puml)
 ```
 
 # Задание 3. Разработка ER-диаграммы

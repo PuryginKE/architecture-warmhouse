@@ -1,0 +1,19 @@
+@startuml
+title FitLife Membership Management Code Diagram
+
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+class AuthInfo {
+  +String name
+  +String login
+  +String password
+  +String token
+  +void login()
+  +void logout()
+  +void refresh()
+  +void checkToken()
+}
+
+@enduml
