@@ -1,4 +1,4 @@
-site_name: FitLife Documentation
+site_name: SmartHome Documentation
 theme: readthedocs
 markdown_extensions:
   - md_in_html

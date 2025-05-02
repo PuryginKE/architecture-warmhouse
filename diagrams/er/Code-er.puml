@@ -21,10 +21,9 @@ class Home {
 
 class Device {
   +String name
-  +String email
   +DeviceType type_id
   +String serial_number
-  +TelemetryData telemetry
+  +TelemetryData params
   +String status
 }
 
@@ -35,8 +34,10 @@ class DeviceType {
 }
 
 class Module {
-  +String module_id
-  +Device device
+  +String id
+  +String name
+  +List<Device> devices
+  +String status
 }
 
 class TelemetryData {
@@ -44,7 +45,6 @@ class TelemetryData {
 }
 
 class Room {
-  +String roome_id
   +String location
   +String temperature
   +String lighting

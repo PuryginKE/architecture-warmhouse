@@ -101,11 +101,22 @@
 
 ### 1. Тип API
 
-Укажите, какой тип API вы будете использовать для взаимодействия микросервисов. Объясните своё решение.
+Используются:
+
+- REST API для получение статичной информации (прим. получение текущих настроек) или закинуть событие в кафку
+- AsyncAPI для чтения событий из кафки
 
 ### 2. Документация API
 
 Здесь приложите ссылки на документацию API для микросервисов, которые вы спроектировали в первой части проектной работы. Для документирования используйте Swagger/OpenAPI или AsyncAPI.
+
+```markdown
+[Документация Home Api](https://github.com/PuryginKE/architecture-warmhouse/blob/warmhouse/docs/docs/architecture_new/home-api.md)
+```
+
+```markdown
+[Документация Kafka topics](https://github.com/PuryginKE/architecture-warmhouse/blob/warmhouse/docs/docs/architecture_new/kafka.md)
+```
 
 # Задание 5. Работа с docker и docker-compose
 

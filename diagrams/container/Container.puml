@@ -7,61 +7,124 @@ top to bottom direction
 
 Person(user, "Пользователь", "Пользователь системы умный дом")
 System(SmartHomeSystem, "SmartHome System", "Система управлением умным домом")
-System(sensor, "Sensor", "Датчик температуры")
+System(temp, "Temp", "Датчик температуры")
+System(sensor, "Sensor", "Обогреватель/кондиционер")
 System(lighter, "Lighter", "Свет")
 
 Container_Boundary(SmartHomeSystem, "SmartHome System") {
   Container(MobileApp, "Моб.приложение", "Kotlin, Swift", "Взаимодействие с пользователем")
-  Container(AuthApi, "Сервис Авторизации",, "Golang", "Авторизация")
-  Container(HomeApi, "Сервис Дома", "Golang", "Данные о доме")
-  Container(BffMobileApi, "BFF Service", "Golang", "Обмен данными с фронтом")
-  Container(userInfoApi, "User Info Service", "Golang", "Получение информации о пользователе")
-  Container(tempApi, "Temperature Service", "Golang", "Получение данных по температуре")
-  Container(sensorApi, "Sensor Service", "Golang", "Получение данных с датчика")
-  Container(lightingApi, "Lighting Service", "Golang", "Получение данных с датчика")
-  Container(DatabaseUser, "Database User", "PostgreSQL", "Данные о пользователе")
-  Container(DatabaseTemperature, "Database Temperature", "Redis", "Данные о температуре")
-  Container(DatabaseSensor, "Database Sensor", "PostgreSQL", "Данные о датчике")
-  Container(DatabaseLighting, "Database Lighting", "PostgreSQL", "Данные о свете")
-  Container(Kafka, "Kafka", "Kafka","События")
+
+  Container_Boundary(GatewaySystem, "Gateway System") {
+    Container(GatewayApi, "Gateway Service", "Golang", "Данные о доме")
+    Container(RedisGateway, "Redis Gateway", "Redis", "Кеширование данных систем")
+  }
+
+  Container_Boundary(AuthSystem, "Auth System") {
+    Container(AuthApi, "Сервис Авторизации", "Golang", "Авторизация")
+    Container(userInfoApi, "User Info Service", "Golang", "Получение информации о пользователе")
+    Container(DatabaseUser, "Database User", "PostgreSQL", "Данные о пользователе")
+  }
+
+  Container_Boundary(DeviceSystem, "Device System") {
+    Container(deviceApi, "Device Service", "Golang", "Получение данных о поддерживаемых устройствах")
+    Container(DatabaseDevice, "Database Device", "PostgreSQL", "Данные о устройствах")
+    Container(DatabaseDevice, "Database Device", "PostgreSQL", "Данные о устройствах")
+  }
+
+  Container_Boundary(ScenarioSystem, "Scenario System") {
+    Container(scenarioApi, "Сервис Сценариев", "Golang", "Сценарии взаимодействия со всеми топиками и сервисами")
+    Container(DatabaseScenario, "Database Scenario", "PostgreSQL", "Данные о сценариях")
+  }
+
+  Container_Boundary(HomeSystem, "Home System") {
+    Container(homeApi, "Сервис Комнат Дома", "Golang", "Данные о комнате")
+    Container(TopicHomeInput, "Topic Home Input", "Kafka","События")
+    Container(TopicHomeOutput, "Topic Home Output", "Kafka","События")
+    Container(DatabaseHome, "Database Home", "PostgreSQL", "Данные о комнате")
+  }
+
+  Container_Boundary(SensorSystem, "Sensor System") {
+    Container(sensorApi, "Sensor Service", "Golang", "Получение данных с датчика")
+    Container(TopicSensorInput, "Topic Sensor Input", "Kafka","События")
+    Container(TopicSensorOutput, "Topic Sensor Output", "Kafka","События")
+    Container(DatabaseSensor, "Database Sensor", "PostgreSQL", "Данные о датчике")
+  }
+
+  Container_Boundary(LighterSystem, "Lighter System") {
+    Container(lightingApi, "Lighting Service", "Golang", "Получение данных с датчика")
+    Container(TopicLightInput, "Topic Light Input", "Kafka","События")
+    Container(TopicLightOutput, "Topic Light Output", "Kafka","События")
+    Container(DatabaseLighting, "Database Lighting", "PostgreSQL", "Данные о свете")
+  }
+
+  Container_Boundary(TemparetureSystem, "Temperature System") {
+    Container(DatabaseTemperature, "Database Temperature", "Redis", "Данные о температуре")
+    Container(tempApi, "Temperature Service", "Golang", "Получение данных по температуре")
+    Container(TopicTempInput, "Topic Temperature Input", "Kafka","События")
+    Container(TopicTempOutput, "Topic Temperature Output", "Kafka","События")
+  }
 }
 
 System_Ext(AuthApi, "Auth API", "API Авторизации")
-System_Ext(HomeApi, "Home API", "API Дома")
-System_Ext(BffMobileApi, "BFF Mobile", "API для работы с моб.интерфейсами")
+System_Ext(homeApi, "Home API", "API Управлением комнаты")
+System_Ext(scenarioApi, "Scenario API", "API Управлением комнаты")
+System_Ext(GatewayApi, "Gateway API", "API для работы с моб.интерфейсами")
 System_Ext(userInfoApi, "User Info API", "API информация пользователя")
 System_Ext(tempApi, "Temperature API", "API управлением температуры")
 System_Ext(sensorApi, "Sensor API", "API управлением датчика")
 System_Ext(lightingApi, "Lighting API", "API управлением светом")
+System_Ext(deviceApi, "Device API", "API информации о доступных устройствах")
 
 Rel(user, MobileApp, "Использует приложение")
 
 Rel(MobileApp, AuthApi, "Авторизация")
-Rel(BffMobileApi, AuthApi, "Провека токена")
+Rel(GatewayApi, AuthApi, "Провека токена")
 
-Rel(MobileApp, BffMobileApi, "Обмен данными с BFF")
+Rel(MobileApp, GatewayApi, "Обмен данными с Gateway")
 
-Rel(BffMobileApi, Kafka,"Отправка событий")
+Rel(GatewayApi, sensorApi,"Получение информации")
+Rel(GatewayApi, lightingApi,"Получение информации")
+Rel(GatewayApi, tempApi,"Получение информации")
+Rel(GatewayApi, homeApi,"Получение информации")
+Rel(GatewayApi, deviceApi,"Получение информации")
+Rel(GatewayApi, scenarioApi,"Получение информации")
+Rel(GatewayApi, userInfoApi,"Получение информации")
 
-Rel(BffMobileApi, HomeApi,"Получение информации")
+Rel(GatewayApi, TopicSensorInput,"Изменение информации")
+Rel(GatewayApi, TopicTempInput,"Изменение информации")
+Rel(GatewayApi, TopicHomeInput,"Изменение информации")
+Rel(GatewayApi, TopicLightInput,"Изменение информации")
 
-Rel(HomeApi, sensorApi,"Получение информации")
-Rel(HomeApi, lightingApi,"Получение информации")
-Rel(HomeApi, tempApi,"Получение информации")
+Rel(TopicSensorInput, sensorApi,"Отправка собатий")
+Rel(TopicLightInput, lightingApi,"Отправка собатий")
+Rel(TopicTempInput, tempApi,"Отправка собатий")
+Rel(TopicHomeInput, homeApi,"Отправка собатий")
 
-Rel(BffMobileApi, userInfoApi,"Получение информации")
+Rel(userInfoApi, DatabaseUser,"Сохранение/чтение")
+Rel(tempApi, DatabaseTemperature,"Сохранение/чтение")
+Rel(sensorApi, DatabaseSensor,"Сохранение/чтение")
+Rel(lightingApi, DatabaseLighting,"Сохранение/чтение")
+Rel(homeApi, DatabaseHome,"Сохранение/чтение")
+Rel(deviceApi, DatabaseDevice,"Сохранение/чтение")
+Rel(scenarioApi, DatabaseScenario,"Сохранение/чтение")
+Rel(GatewayApi, RedisGateway,"Кеширование")
 
-Rel(Kafka, sensorApi,"Отправка собатий")
-Rel(Kafka, lightingApi,"Отправка собатий")
-Rel(Kafka, tempApi,"Отправка собатий")
+Rel(sensorApi, TopicSensorOutput,"Событие изменения информации")
+Rel(tempApi, TopicTempOutput,"Событие изменения информации")
+Rel(homeApi, TopicHomeOutput,"Событие изменения информации")
+Rel(lightingApi, TopicLightOutput,"Событие изменения информации")
 
-Rel(userInfoApi, DatabaseUser,"Обработка данных")
-Rel(tempApi, DatabaseTemperature,"Обработка данных")
-Rel(sensorApi, DatabaseSensor,"Обработка данных")
-Rel(lightingApi, DatabaseLighting,"Обработка данных")
+Rel(temp, tempApi,"Отправка данных сенсору")
+Rel(sensor, sensorApi,"Отправка данных сенсору")
 
-Rel(tempApi, sensor,"Отправка данных сенсору")
+Rel(tempApi, temp,"Отправка данных сенсору")
 Rel(sensorApi, sensor,"Отправка данных сенсору")
 Rel(lightingApi, lighter,"Отправка данных на свет")
+
+Rel(scenarioApi, TemparetureSystem,"Получение событий изменения, отправка события при срабатывания сценария")
+Rel(scenarioApi, SensorSystem,"Получение событий изменения, отправка события при срабатывания сценария")
+Rel(scenarioApi, LighterSystem,"Получение событий изменения, отправка события при срабатывания сценария")
+Rel(scenarioApi, HomeSystem,"Получение событий изменения, отправка события при срабатывания сценария")
+Rel(scenarioApi, DeviceSystem,"Получение событий изменения, отправка события при срабатывания сценария")
 
 @enduml
