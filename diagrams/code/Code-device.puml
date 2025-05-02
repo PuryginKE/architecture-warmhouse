@@ -1,0 +1,19 @@
+@startuml
+title SmartHome Device Management Code Diagram
+
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+class Device {
+  +String id
+  +String name
+  +DeviceType type_id
+  +String serial_number
+  +TelemetryData params
+  +String status
+  +void getDevice()
+  +void setDevice()
+}
+
+@enduml

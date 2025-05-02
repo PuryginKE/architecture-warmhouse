@@ -1,5 +1,5 @@
 @startuml
-title FitLife Membership Management Code Diagram
+title SmartHome Home Management Code Diagram
 
 top to bottom direction
 
@@ -8,6 +8,8 @@ top to bottom direction
 class Home {
   +String name
   +List<Room> rooms
+  +List<Scenario> scenarios
+  +void createRoom()
   +void getState()
   +void activate()
   +void cancel()
@@ -21,8 +23,7 @@ class Room {
   +String location
   +String temperature
   +String lighting
-  +List<Lighter> lighters
-  +List<Sensors> sensors
+  +List<Scenario> scenarios
   +void getState()
   +void activate()
   +void cancel()
@@ -31,19 +32,5 @@ class Room {
   +void getTemperature()
   +void setLighter()
 }
-
-class Lighters {
-   +String lighterId
-   +String location
-}
-
-class Sensors {
-   +String lighterId
-   +String location
-}
-
-Home "1" -- "0..*" Room : includes
-Room "1" -- "0..*" Lighters : includes
-Room "1" -- "0..*" Sensors : includes
 
 @enduml

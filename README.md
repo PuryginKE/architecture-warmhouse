@@ -70,7 +70,7 @@
 **Диаграмма компонентов (Components)**
 
 ```markdown
-[Диаграмма компонентов Моб.приложения](https://github.com/PuryginKE/architecture-warmhouse/blob/warmhouse/diagrams/component/Component-Mobile.puml)
+[Диаграмма компонентов Моб.приложения](https://github.com/PuryginKE/architecture-warmhouse/blob/warmhouse/diagrams/component/Component.puml)
 ```
 
 **Диаграмма кода (Code)**
@@ -80,7 +80,7 @@
 ```
 
 ```markdown
-[Диаграмма кода BFF](https://github.com/PuryginKE/architecture-warmhouse/blob/warmhouse/diagrams/code/Code-bff.puml)
+[Диаграмма кода Gateway](https://github.com/PuryginKE/architecture-warmhouse/blob/warmhouse/diagrams/code/Code-gateway.puml)
 ```
 
 ```markdown
@@ -88,13 +88,17 @@
 ```
 
 ```markdown
-[Диаграмма кода User](https://github.com/PuryginKE/architecture-warmhouse/blob/warmhouse/diagrams/code/Code-user.puml)
+[Диаграмма кода Device](https://github.com/PuryginKE/architecture-warmhouse/blob/warmhouse/diagrams/code/Code-device.puml)
+```
+
+```markdown
+[Документация кода Scenario](https://github.com/PuryginKE/architecture-warmhouse/blob/warmhouse/diagrams/code/Code-scenario.puml)
 ```
 
 # Задание 3. Разработка ER-диаграммы
 
 ```markdown
-[Диаграмма кода User](https://github.com/PuryginKE/architecture-warmhouse/blob/warmhouse/diagrams/er/Code-er.puml)
+[Диаграмма ER](https://github.com/PuryginKE/architecture-warmhouse/blob/warmhouse/diagrams/er/Code-er.puml)
 ```
 
 # Задание 4. Создание и документирование API
@@ -103,7 +107,7 @@
 
 Используются:
 
-- REST API для получение статичной информации (прим. получение текущих настроек) или закинуть событие в кафку
+- REST API для получение синхронной информации (прим. получение текущих настроек)
 - AsyncAPI для чтения событий из кафки
 
 ### 2. Документация API
@@ -111,11 +115,19 @@
 Здесь приложите ссылки на документацию API для микросервисов, которые вы спроектировали в первой части проектной работы. Для документирования используйте Swagger/OpenAPI или AsyncAPI.
 
 ```markdown
-[Документация Home Api](https://github.com/PuryginKE/architecture-warmhouse/blob/warmhouse/docs/docs/architecture_new/home-api.md)
+[Документация Scenario Api](https://github.com/PuryginKE/architecture-warmhouse/blob/warmhouse/docs/docs/architecture/scenario-api.md)
 ```
 
 ```markdown
-[Документация Kafka topics](https://github.com/PuryginKE/architecture-warmhouse/blob/warmhouse/docs/docs/architecture_new/kafka.md)
+[Документация Home Api](https://github.com/PuryginKE/architecture-warmhouse/blob/warmhouse/docs/docs/architecture/home-api.md)
+```
+
+```markdown
+[Документация Sensor Api](https://github.com/PuryginKE/architecture-warmhouse/blob/warmhouse/docs/docs/architecture/sensor-api.md)
+```
+
+```markdown
+[Документация Device Api](https://github.com/PuryginKE/architecture-warmhouse/blob/warmhouse/docs/docs/architecture/device-api.md)
 ```
 
 # Задание 5. Работа с docker и docker-compose

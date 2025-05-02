@@ -6,11 +6,19 @@ top to bottom direction
 !includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
 
 Person(user, "Пользователь", "Пользователь умного дома")
-System(SmartHomeSystem, "Умный дом", "Система организует удалённое управление отоплением в доме")
+Person(user2, "Пользователь", "Пользователь умного дома")
 
-System_Ext(api, "SmartHome API", "API управлением умного дома")
+System(sensor, "Sensor", "Датчик")
+System(sensor2, "Sensor2", "Датчик 2")
+System(SmartHomeSystem, "Умный дом", "Веб-интерфейс, организует удалённое управление отоплением в доме")
 
-Rel(user, SmartHomeSystem, "Просматривает температуру/управляет датчиками")
-Rel(SmartHomeSystem,api,"Получение данных")
+System_Ext(api, "SmartHome API", "API управлением умного датчиком, регистрацией датчиков")
+
+Rel(user, SmartHomeSystem, "Устанавливает значение")
+Rel(user2, SmartHomeSystem, "Устанавливает значение")
+Rel(SmartHomeSystem,api,"")
+Rel(api,SmartHomeSystem,"Обмен данными")
+Rel(api,sensor,"Отправка данных")
+Rel(api,sensor2,"Отправка данных")
 
 @enduml

@@ -12,7 +12,7 @@ System(sensor, "Sensor", "Обогреватель/кондиционер")
 System(lighter, "Lighter", "Свет")
 
 Container_Boundary(SmartHomeSystem, "SmartHome System") {
-  Container(MobileApp, "Моб.приложение", "Kotlin, Swift", "Взаимодействие с пользователем")
+  Container(WebApp, "Веб-интерфейс", "JavaScript", "Взаимодействие с пользователем")
 
   Container_Boundary(GatewaySystem, "Gateway System") {
     Container(GatewayApi, "Gateway Service", "Golang", "Данные о доме")
@@ -27,7 +27,6 @@ Container_Boundary(SmartHomeSystem, "SmartHome System") {
 
   Container_Boundary(DeviceSystem, "Device System") {
     Container(deviceApi, "Device Service", "Golang", "Получение данных о поддерживаемых устройствах")
-    Container(DatabaseDevice, "Database Device", "PostgreSQL", "Данные о устройствах")
     Container(DatabaseDevice, "Database Device", "PostgreSQL", "Данные о устройствах")
   }
 
@@ -75,12 +74,12 @@ System_Ext(sensorApi, "Sensor API", "API управлением датчика")
 System_Ext(lightingApi, "Lighting API", "API управлением светом")
 System_Ext(deviceApi, "Device API", "API информации о доступных устройствах")
 
-Rel(user, MobileApp, "Использует приложение")
+Rel(user, WebApp, "Использует приложение")
 
-Rel(MobileApp, AuthApi, "Авторизация")
+Rel(WebApp, AuthApi, "Авторизация")
 Rel(GatewayApi, AuthApi, "Провека токена")
 
-Rel(MobileApp, GatewayApi, "Обмен данными с Gateway")
+Rel(WebApp, GatewayApi, "Обмен данными с Gateway")
 
 Rel(GatewayApi, sensorApi,"Получение информации")
 Rel(GatewayApi, lightingApi,"Получение информации")
@@ -114,12 +113,13 @@ Rel(tempApi, TopicTempOutput,"Событие изменения информац
 Rel(homeApi, TopicHomeOutput,"Событие изменения информации")
 Rel(lightingApi, TopicLightOutput,"Событие изменения информации")
 
-Rel(temp, tempApi,"Отправка данных сенсору")
-Rel(sensor, sensorApi,"Отправка данных сенсору")
+Rel(temp, tempApi,"Отправка данных в апи")
+Rel(sensor, sensorApi,"Отправка данных в апи")
+Rel(lighter, lightingApi,"Отправка данных в апи")
 
-Rel(tempApi, temp,"Отправка данных сенсору")
-Rel(sensorApi, sensor,"Отправка данных сенсору")
-Rel(lightingApi, lighter,"Отправка данных на свет")
+Rel(tempApi, temp,"Отправка данных")
+Rel(sensorApi, sensor,"Отправка данных")
+Rel(lightingApi, lighter,"Отправка данных")
 
 Rel(scenarioApi, TemparetureSystem,"Получение событий изменения, отправка события при срабатывания сценария")
 Rel(scenarioApi, SensorSystem,"Получение событий изменения, отправка события при срабатывания сценария")

@@ -1,6 +1,4 @@
-```
-Управление модулями дома
-
+<!-- ```
 openapi: 3.0.0
 info:
   title: Home API
@@ -10,12 +8,14 @@ servers:
   - url: https://dev@magistrali.tech:3040
     description: dev стенд
 tags:
+  - name: Scenario
+    description: Сценарий
   - name: Modules
     description: Модули
-  - name: Rooms
-    description: Комнаты
   - name: Devices
     description: Устройста
+  - name: Rooms
+    description: Комнаты
 
 paths:
   /api/devices/v0/get:
@@ -38,22 +38,54 @@ paths:
                 $ref: '#/components/schemas/DevicesV0GetMethodResponse'
       tags:
         - Devices
-  /api/modules/v0/get:
+  /api/scenario/v0/get:
     get:
-      summary: Получение всех доступных модулей
-      description: Получение информации по модулям.
+      summary: Получение списка сценариев
+      description: Получение списка устройств
+      parameters:
+        - name: type
+          required: true
+          description: Тип модуля
+          in: query
+          schema:
+            type: string
       responses:
         '200':
           description: Успешный ответ
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ModuleV0GetMethodResponse'
+                $ref: '#/components/schemas/DevicesV0GetMethodResponse'
       tags:
-        - Modules
+        - Scenario
+  /api/scenario/v0/update/{id}:
+    post:
+      summary: Создание сценария
+      description: Обновление модуля по id
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ModuleV0UpdateMethodRequest'
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModuleDisableV0MethodResponse'
+      tags:
+        - Scenario
   /api/modules/v0/update/{id}:
     post:
-      summary: Обновление добавленного модуля
+      summary: Отправка события на модуль
       description: Обновление модуля по id
       parameters:
         - name: id
@@ -333,4 +365,4 @@ components:
                       type: string
                       description: ID модуля
 
-```
+``` -->
