@@ -7,11 +7,11 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/gin-gonic/gin"
+
 	"smarthome/db"
 	"smarthome/models"
 	"smarthome/services"
-
-	"github.com/gin-gonic/gin"
 )
 
 // SensorHandler handles sensor-related requests
@@ -54,6 +54,7 @@ func (h *SensorHandler) GetSensors(c *gin.Context) {
 	for i, sensor := range sensors {
 		if sensor.Type == models.Temperature {
 			tempData, err := h.TemperatureService.GetTemperatureByID(fmt.Sprintf("%d", sensor.ID))
+			log.Println("TEST3", sensor.ID)
 			if err == nil {
 				// Update sensor with real-time data
 				sensors[i].Value = tempData.Value

@@ -4,23 +4,33 @@ services:
   postgres:
     image: postgres:16-alpine
     container_name: smarthome-postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-d", "smarthome_db", "-U", "postgres"]
+      interval: 30s
+      timeout: 60s
+      retries: 5
+      start_period: 80s
     environment:
-      POSTGRES_DB: smart_home_db
-      POSTGRES_USER: smarthome
-      POSTGRES_PASSWORD: sh
+      POSTGRES_DB: smarthome_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     volumes:
       - ./smart_home/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "5432:5432"
+    networks:
+      - smarthome-network
 
   temperature-api:
     build:
-      context: ./temperature
+      context: ./temperature-api
       dockerfile: Dockerfile
+    container_name: temperature-api
     ports:
       - "8081:8081"
+    restart: unless-stopped
     networks:
-      - temperature-network
+      - smarthome-network
 
   app:
     build:
@@ -46,6 +56,4 @@ volumes:
 
 networks:
   smarthome-network:
-    driver: bridge
-  temperature-network:
     driver: bridge

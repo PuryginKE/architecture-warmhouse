@@ -1,17 +1,23 @@
 package main
 
 import (
-    "encoding/json"
-    "fmt"
-    "math/rand"
-    "net/http"
-    "time"
+	"encoding/json"
+	"fmt"
+	"math"
+	"math/rand"
+	"net/http"
+	"time"
 )
 
 type TemperatureResponse struct {
-    Location     string  `json:"location"`
-    Temperature float64 `json:"temperature"`
-		SensorId     string  `json:"sensorId"`
+	Value       float64   `json:"value"`
+	Unit        string    `json:"unit"`
+	Timestamp   time.Time `json:"timestamp"`
+	Location    string    `json:"location"`
+	Status      string    `json:"status"`
+	SensorID    string    `json:"sensor_id"`
+	SensorType  string    `json:"sensor_type"`
+	Description string    `json:"description"`
 }
 
 func temperatureHandler(w http.ResponseWriter, r *http.Request) {
@@ -46,11 +52,12 @@ func temperatureHandler(w http.ResponseWriter, r *http.Request) {
 
     rand.Seed(time.Now().UnixNano())
     randomTemp := rand.Float64() * 60 - 30
+		randomTemp = math.Round(randomTemp * 100) / 100
 
     response := TemperatureResponse{
         Location:     location,
-        Temperature: randomTemp,
-				SensorId: sensorId
+        SensorID:     sensorID,
+        Value: randomTemp,
     }
 
     w.Header().Set("Content-Type", "application/json")
