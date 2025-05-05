@@ -59,9 +59,10 @@ func (s *TemperatureService) GetTemperature(location string) (*TemperatureRespon
 
 // GetTemperatureByID fetches temperature data for a specific sensor ID
 func (s *TemperatureService) GetTemperatureByID(sensorID string) (*TemperatureResponse, error) {
-	url := fmt.Sprintf("%s/temperature/%s", s.BaseURL, sensorID)
+	url := fmt.Sprintf("%s/temperature?sensorID=%s", s.BaseURL, sensorID)
 
 	resp, err := s.HTTPClient.Get(url)
+
 	if err != nil {
 		return nil, fmt.Errorf("error fetching temperature data: %w", err)
 	}
@@ -76,5 +77,7 @@ func (s *TemperatureService) GetTemperatureByID(sensorID string) (*TemperatureRe
 		return nil, fmt.Errorf("error decoding temperature response: %w", err)
 	}
 
+	fmt.Println("TEST4", temperatureResp)
+	
 	return &temperatureResp, nil
 }

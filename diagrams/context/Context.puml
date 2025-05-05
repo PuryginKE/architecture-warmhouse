@@ -1,0 +1,53 @@
+@startuml
+title SmartHome Context Diagram
+
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+Person(user, "Пользователь", "Пользователь умного дома")
+Person(admin, "Поддержка", "Поддержка системы умного дома")
+
+System(sensor, "Sensor", "Датчик")
+System(light, "Light", "Свет")
+System(SmartHomeSystem, "Умный дом", "Веб-интерфейс умного дома")
+
+Container_Boundary(SmartHomeControlSystem, "SmartHome Управление домом") { 
+  System(scenarioApi, "SmartHome Scenario API", "Управление сценариями")
+  System(monitoringApi, "SmartHome Monitoring API", "Мониторинг")
+  System(lightingApi, "SmartHome Lighting API", "Управление светом")
+  System(sensorApi, "SmartHome Sensor API", "Управление отоплением")
+  System(tepmeratureApi, "SmartHome Temperature API", "Управление температуры")
+}
+
+Container_Boundary(SmartHomeSupplierSystem, "SmartHome Поддержка") { 
+  System(clientApi, "SmartHome Client API", "Администрирование пользователей")
+  System(consultingApi, "SmartHome Consulting API", "Консультирование")
+}
+
+Container_Boundary(SmartHomePaymentSystem, "SmartHome Оплата") { 
+  System(paymentApi, "SmartHome Payment API", "Управление оплатой")
+  System(reportApi, "SmartHome Report API", "Отчеты")
+}
+
+Container_Boundary(SmartHomeMarketingSystem, "SmartHome Маркейтинг") { 
+  System(demoApi, "SmartHome Demo API", "Демо стенд")
+}
+
+Container_Boundary(SmartHomeDeviceSystem, "SmartHome Администрирование") { 
+  System(devicesApi, "SmartHome Devices API", "Администрирование устройств")
+}
+
+Rel(user, SmartHomeSystem, "Устанавливает значение")
+Rel(admin, SmartHomeSystem, "Работает в системе")
+
+Rel(SmartHomeSystem,SmartHomeControlSystem,"Работа с системой")
+Rel(SmartHomeSystem,SmartHomeSupplierSystem,"Работа поддержки клиентов")
+Rel(SmartHomeSystem,SmartHomePaymentSystem,"Оплата системы")
+Rel(SmartHomeSystem,SmartHomeMarketingSystem,"Демо-стенд для новых клиентов")
+Rel(SmartHomeSystem,SmartHomeDeviceSystem,"Демо-стенд для новых клиентов")
+
+Rel(SmartHomeControlSystem,sensor,"Обмен данными")
+Rel(SmartHomeControlSystem,light,"Обмен данными")
+
+@enduml

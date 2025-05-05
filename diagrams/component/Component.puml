@@ -1,0 +1,60 @@
+@startuml
+title SmartHome Web Application Component Diagram
+
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+Container_Boundary(SmartHomeSystem, "SmartHome Web System") {
+  Container(WebApp, "Web Application", "JavaScript", "Интерфейс пользователя")
+  System_Ext(GatewayApi, "Gateway API Service", "Golang", "Сервис данных о доме")
+  System_Ext(AuthApi, "Auth API Service", "Golang", "Сервис авторизации")
+}
+
+Container(WebApp, "Web Application", "JavaScript") {
+  Container_Boundary(AuthModule, "Авторизация") {
+    Component(AuthController, "AuthController", "Авторизация в системе")
+    Component(AuthService, "AuthService", "Бизнес логика авторизации")
+    Component(AuthStore, "AuthStore", "Хранение состояния")
+  }
+
+  Container_Boundary(ScenarioModule, "Создание сценариев") {
+    Component(ScenarioController, "ScenarioController", "Управление сценариями")
+    Component(ScenarioService, "ScenarioService", "Бизнес логика сценариев")
+    Component(ScenarioStore, "ScenarioStore", "Хранение состояния")
+  }
+
+  Container_Boundary(RoomModule, "Работа с комнатами") {
+    Component(RoomController, "RoomController", "Управление комнатами")
+    Component(RoomService, "RoomService", "Бизнес логика комнат")
+    Component(RoomStore, "RoomStore", "Хранение состояния")
+  }
+
+  Container_Boundary(ControlerModule, "Установка значений по всему дому") {
+    Component(ControlerController, "ControlerController", "Управление значениями")
+    Component(ControlerService, "ControlerService", "Бизнес логика контроллера")
+    Component(ControlerStore, "ControlerStore", "Хранение состояния")
+  }
+}
+
+Rel(AuthController,AuthStore,"Данные из стора")
+Rel(AuthController,AuthService,"Данные из сервиса")
+Rel(AuthService,AuthStore,"Запись в стор")
+Rel(AuthService,AuthApi,"Работа с АПИ", "JSON,HTTPS")
+
+Rel(ScenarioController,ScenarioStore,"Данные из стора")
+Rel(ScenarioController,ScenarioService,"Данные из сервиса")
+Rel(ScenarioService,ScenarioStore,"Запись в стор")
+Rel(ScenarioService,GatewayApi,"Работа с АПИ", "JSON,HTTPS")
+
+Rel(RoomController,RoomStore,"Данные из стора")
+Rel(RoomController,RoomService,"Данные из сервиса")
+Rel(RoomService,RoomStore,"Запись в стор")
+Rel(RoomService,GatewayApi,"Работа с АПИ", "JSON,HTTPS")
+
+Rel(ControlerController,ControlerStore,"Данные из стора")
+Rel(ControlerController,ControlerService,"Данные из сервиса")
+Rel(ControlerService,ControlerStore,"Запись в стор")
+Rel(ControlerService,GatewayApi,"Работа с АПИ", "JSON,HTTPS")
+
+@enduml

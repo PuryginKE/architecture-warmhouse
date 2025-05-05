@@ -1,0 +1,72 @@
+@startuml
+title SmartHome Home Management Code Diagram
+
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+class Home {
+  +String name
+  +List<Room> rooms
+  +List<Scenario> scenarios
+  +void createRoom()
+  +void getState()
+  +void activate()
+  +void cancel()
+  +void getSensor()
+  +void setSensor()
+  +void getTemperature()
+  +void setLighter()
+}
+
+class Room {
+  +String location
+  +String temperature
+  +String lighting
+  +List<Scenario> scenarios
+  +void getState()
+  +void activate()
+  +void cancel()
+  +void getSensor()
+  +void setSensor()
+  +void getTemperature()
+  +void setLighter()
+}
+
+class Scenario {
+  +String id
+  +String name
+  +Time dt_create
+  +Time dt_update
+  +String status
+  +List<Module> modules
+}
+
+class Module {
+  +String id
+  +String name
+  +String status
+  +String value
+  +String description
+  +String location
+  +Time dt_create 
+  +List<Device> devices
+}
+
+class Device {
+  +String id
+  +String name
+  +DeviceType type_id
+  +String serial_number
+  +TelemetryData params
+  +String status
+}
+
+
+Home "1" -- "0..*" Module : Room
+Home "1" -- "0..*" Scenario : Room
+Room "1" -- "0..*" Scenario : Room
+Scenario "1" -- "0..*" Module : includes
+Module "1" -- "0..*" Device : includes
+
+@enduml
