@@ -27,4 +27,16 @@ class Module {
   +List<Device> devices
 }
 
+class Device {
+  +String id
+  +String name
+  +DeviceType type_id
+  +String serial_number
+  +TelemetryData params
+  +String status
+}
+
+Scenario "1" -- "0..*" Module : includes
+Module "1" -- "0..*" Device : includes
+
 @enduml

@@ -19,4 +19,37 @@ class Gateway {
   +void checkToken()
 }
 
+class Scenario {
+  +String id
+  +String name
+  +Time dt_create
+  +Time dt_update
+  +String status
+  +List<Module> modules
+}
+
+class Module {
+  +String id
+  +String name
+  +String status
+  +String value
+  +String description
+  +String location
+  +Time dt_create 
+  +List<Device> devices
+}
+
+class Device {
+  +String id
+  +String name
+  +DeviceType type_id
+  +String serial_number
+  +TelemetryData params
+  +String status
+}
+
+Gateway "1" -- "0..*" Scenario : includes
+Scenario "1" -- "0..*" Module : includes
+Module "1" -- "0..*" Device : includes
+
 @enduml
